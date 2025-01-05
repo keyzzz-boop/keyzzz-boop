@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Courses — EduManage{% endblock %}
+{% block page_title %}Courses{% endblock %}
+{% block breadcrumb %}Academic / Courses{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title"> Courses</h3>
+    {% if user.is_admin %}<a href="{% url 'create_course' %}" class="btn btn-primary"> Add Course</a>{% endif %}
+  </div>
+  <div class="filter-bar">
+    <input type="text" id="table-search" placeholder=" Search courses..."/>
+  </div>
+  {% if courses %}
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Code</th><th>Course Name</th><th>Credits</th><th>Teacher</th><th>Students</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for c in courses %}
+        <tr>
+          <td><span class="badge badge-primary">{{ c.code }}</span></td>
+          <td>
+            <div style="font-weight:600;">{{ c.name }}</div>
+            {% if c.description %}<div style="font-size:12px;color:var(--gray-400);">{{ c.description|truncatechars:50 }}</div>{% endif %}
+          </td>
+          <td><span class="badge badge-info">{{ c.credits }} cr</span></td>
+          <td>
+            {% if c.teacher %}
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:28px;height:28px;border-radius:50%;background:var(--secondary);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;">
+                  {{ c.teacher.first_name|first|upper }}
+                </div>
+                {{ c.teacher.get_full_name|default:c.teacher.username }}
+              </div>
+            {% else %}<span style="color:var(--gray-300);">Unassigned</span>{% endif %}
+          </td>
+          <td><span class="badge badge-student">{{ c.students.count }} enrolled</span></td>
+          <td>
+            <a href="{% url 'course_detail' c.pk %}" class="btn btn-sm btn-secondary"> View</a>
+            {% if user.is_admin %}
+            <a href="{% url 'edit_course' c.pk %}" class="btn btn-sm btn-warning"></a>
+            <a href="{% url 'delete_course' c.pk %}" class="btn btn-sm btn-danger" data-confirm="Delete course '{{ c.name }}'?">🗑</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-icon"></div>
+    <p>No courses found</p>
+    {% if user.is_admin %}<div class="empty-sub"><a href="{% url 'create_course' %}" class="btn btn-primary" style="margin-top:12px;">➕ Add First Course</a></div>{% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
