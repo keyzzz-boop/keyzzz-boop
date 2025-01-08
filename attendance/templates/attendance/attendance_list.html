@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Attendance — EduManage{% endblock %}
+{% block page_title %}Attendance{% endblock %}
+{% block breadcrumb %}Academic / Attendance{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title"> Attendance Sessions</h3>
+    {% if user.is_teacher or user.is_admin %}
+    <a href="{% url 'class_list' %}" class="btn btn-primary"> Take Attendance</a>
+    {% endif %}
+  </div>
+  <div class="filter-bar">
+    <input type="text" id="table-search" placeholder=" Search sessions..."/>
+  </div>
+  {% if sessions %}
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Class</th><th>Course</th><th>Date</th><th>Taken By</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for s in sessions %}
+        <tr>
+          <td><strong>{{ s.classroom.name }}</strong>{% if s.classroom.section %} <span class="badge badge-info">{{ s.classroom.section }}</span>{% endif %}</td>
+          <td><span class="badge badge-primary">{{ s.classroom.course.code }}</span></td>
+          <td>{{ s.date }}</td>
+          <td>{{ s.taken_by.get_full_name|default:s.taken_by.username|default:"—" }}</td>
+          <td>
+            <a href="{% url 'session_detail' s.pk %}" class="btn btn-sm btn-secondary"> View</a>
+            {% if user.is_teacher or user.is_admin %}
+            <a href="{% url 'take_attendance' s.classroom.pk %}?date={{ s.date|date:'Y-m-d' }}" class="btn btn-sm btn-warning">✏️ Edit</a>
+            <a href="{% url 'attendance_report' s.classroom.pk %}" class="btn btn-sm btn-info"></a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-icon"></div>
+    <p>No attendance sessions recorded yet</p>
+    {% if user.is_teacher or user.is_admin %}
+    <div class="empty-sub"><a href="{% url 'class_list' %}" class="btn btn-primary" style="margin-top:12px;">Go to Classes</a></div>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
