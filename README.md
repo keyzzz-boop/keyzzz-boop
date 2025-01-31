@@ -1,6 +1,7 @@
 - 👋 Hi, I’m @keyzzz-boop aka Anubhav rijal
 - 👀 I’m interested in ... coding 
-- 🌱 I’m currently learning ... c 
+- 🌱 I’m currently learning ... html, css , java 
+- 👨‍💻 learnt c, tally,python
 - 💞️ I’m looking to collaborate on ... microsoft 
 - 📫 How to reach me ... mail(anubhavrijal69@gmail.com)
   - ⚡ Fun fact: ... I am breathing 
