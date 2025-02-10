@@ -1,0 +1,23 @@
+p{
+    color: rgb(70, 136, 193);
+    font-size: 20px;
+    font-weight: bold;
+    background-color: aqua;
+   
+    
+}
+h1{
+    color: aquamarine;
+    margin: 0;
+}
+
+.first{
+    color: blue;
+    font-size: xx-large;
+}
+
+#container {
+    height: 400px;
+    width: 300px;
+    background-color: rgb(70, 136, 193);
+}
