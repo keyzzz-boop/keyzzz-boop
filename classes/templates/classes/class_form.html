@@ -22,7 +22,9 @@
           <select name="course" required>
             <option value="">— Select Course —</option>
             {% for c in courses %}
-            <option value="{{ c.pk }}" {% if cls.course_id == c.pk %}selected{% endif %}>{{ c.code }} — {{ c.name }}</option>
+            <option value="{{ c.pk }}" {% if cls and cls.course_id == c.pk %}selected{% endif %}>
+              {{ c.code }} — {{ c.name }}
+            </option>
             {% endfor %}
           </select>
         </div>
@@ -31,7 +33,7 @@
           <select name="teacher">
             <option value="">— No Teacher —</option>
             {% for t in teachers %}
-            <option value="{{ t.pk }}" {% if cls.teacher_id == t.pk %}selected{% endif %}>
+            <option value="{{ t.pk }}" {% if cls and cls.teacher_id == t.pk %}selected{% endif %}>
               {{ t.get_full_name|default:t.username }}
             </option>
             {% endfor %}
@@ -51,18 +53,18 @@
             <button type="button" class="btn btn-sm btn-secondary" data-select-all="#students-select">Select All</button>
             <button type="button" class="btn btn-sm btn-secondary" data-deselect-all="#students-select">Deselect All</button>
           </div>
-          <select name="students" id="students-select" multiple>
+          <select name="students" id="students-select" multiple style="min-height:160px;">
             {% for s in students %}
-            <option value="{{ s.pk }}" {% if s in cls.students.all %}selected{% endif %}>
+            <option value="{{ s.pk }}" {% if cls and s in cls.students.all %}selected{% endif %}>
               {{ s.get_full_name|default:s.username }} ({{ s.username }})
             </option>
             {% endfor %}
           </select>
-          <div class="form-hint">Hold Ctrl/Cmd to select multiple</div>
+          <div class="form-hint">Hold Ctrl/Cmd to select multiple students</div>
         </div>
       </div>
       <div class="form-actions" style="margin-top:20px;">
-        <button type="submit" class="btn btn-primary"> {{ action }}</button>
+        <button type="submit" class="btn btn-primary">💾 {{ action }}</button>
         <a href="{% url 'class_list' %}" class="btn btn-secondary">Cancel</a>
       </div>
     </form>
