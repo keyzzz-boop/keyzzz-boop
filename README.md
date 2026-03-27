@@ -12,8 +12,7 @@ A full-featured Django college management system with **Admin**, **Teacher**, an
 | **Courses**  | Create, assign teacher & students  | View assigned courses         | View enrolled courses     |
 | **Classes**  | Create, assign teacher & students  | View own classes              | View enrolled classes     |
 | **Attendance**| View all sessions & reports       | Take/Edit attendance per class| View own attendance %     |
-| **Assignments**| View all, manage              | Create/Edit/Grade per class   | View, Submit, see grades  |
-| **Fees**     | Create fees, view all payments     | —                             | View fees, make payments  |
+| **Assignments**| View all, manage              |
 
 ---
 
